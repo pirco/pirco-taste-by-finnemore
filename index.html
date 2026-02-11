@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taste — Design judgment for LLMs</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11/highlight.min.js"></script>
+  <style>
+    :root {
+      --color-bg: #f8f7f4;
+      --color-surface: #ffffff;
+      --color-text-primary: #1a1a1a;
+      --color-text-secondary: #4a4a4a;
+      --color-text-muted: #8a8a8a;
+      --color-border: #d4d4d4;
+      --color-border-subtle: #e8e8e8;
+      --color-accent: #1a1a1a;
+      --color-accent-muted: #f0efed;
+      --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace;
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-24: 6rem;
+      --space-32: 8rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-text-primary);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--space-4) var(--space-8);
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-8);
+    }
+
+    .site-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .header-nav a, .header-nav button {
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 150ms ease;
+    }
+
+    .header-nav a:hover, .header-nav button:hover { color: var(--color-text-secondary); }
+    .header-nav a.active, .header-nav button.active {
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
+
+    /* ============================================
+       HOMEPAGE
+       ============================================ */
+    .page-home { display: none; }
+    .page-home.visible { display: block; }
+
+    .hero {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--space-32) var(--space-8) var(--space-24);
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero .lede {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-12);
+    }
+
+    .hero .lede strong { color: var(--color-text-primary); font-weight: 500; }
+
+    .home-content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 var(--space-8) var(--space-32);
+    }
+
+    .home-content h2 {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-top: var(--space-16);
+      margin-bottom: var(--space-4);
+    }
+
+    .home-content h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-3);
+    }
+
+    .home-content p {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+      line-height: 1.65;
+    }
+
+    .home-content code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--color-accent-muted);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+    }
+
+    .home-content pre {
+      background: #1a1a1a;
+      border-radius: 6px;
+      padding: var(--space-6);
+      margin: var(--space-6) 0;
+      overflow-x: auto;
+      line-height: 1.55;
+    }
+
+    .home-content pre code {
+      background: none;
+      padding: 0;
+      color: #e0e0e0;
+      font-size: 13px;
+    }
+
+    .home-content ul, .home-content ol {
+      padding-left: var(--space-6);
+      margin-bottom: var(--space-4);
+    }
+
+    .home-content li {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .home-content li strong { color: var(--color-text-primary); font-weight: 500; }
+
+    .home-content hr {
+      border: none;
+      border-top: 1px solid var(--color-border-subtle);
+      margin: var(--space-16) 0;
+    }
+
+    .snippet-label {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+      letter-spacing: 0.02em;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin: var(--space-8) 0;
+    }
+
+    @media (max-width: 640px) {
+      .how-grid { grid-template-columns: 1fr; }
+      .hero { padding: var(--space-16) var(--space-4) var(--space-12); }
+      .home-content { padding: 0 var(--space-4) var(--space-16); }
+    }
+
+    .how-step {
+      padding: var(--space-6);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 6px;
+    }
+
+    .how-step .step-num {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+
+    .how-step h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: var(--space-2);
+    }
+
+    .how-step p {
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    .package-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin: var(--space-8) 0;
+    }
+
+    @media (max-width: 640px) {
+      .package-cards { grid-template-columns: 1fr; }
+    }
+
+    .pkg-card {
+      padding: var(--space-6);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 150ms ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .pkg-card:hover { border-color: var(--color-border); }
+
+    .pkg-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 var(--space-2);
+    }
+
+    .pkg-card p {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .pkg-card.foundation { border-left: 3px solid var(--color-text-primary); }
+    .pkg-card.hospitality { border-left: 3px solid #b8953f; }
+    .pkg-card.corporate { border-left: 3px solid #4a7ab5; }
+    .pkg-card.artisan { border-left: 3px solid #7a8a6c; }
+
+    .component-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+      font-size: 14px;
+    }
+
+    .component-table th {
+      text-align: left;
+      font-weight: 600;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 2px solid var(--color-border);
+      font-size: 13px;
+    }
+
+    .component-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border-subtle);
+      color: var(--color-text-secondary);
+      font-size: 13px;
+    }
+
+    .component-table td:first-child {
+      font-weight: 500;
+      color: var(--color-text-primary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    /* ============================================
+       BROWSE VIEW
+       ============================================ */
+    .page-browse { display: none; }
+    .page-browse.visible { display: block; }
+
+    .package-tabs {
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .package-tabs-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-8);
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .package-tab {
+      padding: var(--space-3) var(--space-6);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 150ms ease, border-color 150ms ease;
+      font-family: inherit;
+    }
+
+    .package-tab:hover { color: var(--color-text-secondary); }
+    .package-tab.active {
+      color: var(--color-text-primary);
+      font-weight: 500;
+      border-bottom-color: var(--color-text-primary);
+    }
+
+    .main-layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: calc(100vh - 120px);
+    }
+
+    @media (max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .package-tabs-inner { padding: 0 var(--space-4); }
+    }
+
+    .file-sidebar {
+      border-right: 1px solid var(--color-border-subtle);
+      padding: var(--space-6) 0;
+      position: sticky;
+      top: 105px;
+      height: fit-content;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 768px) {
+      .file-sidebar {
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border-subtle);
+        padding: var(--space-3) var(--space-4);
+        display: flex;
+        gap: var(--space-1);
+        overflow-x: auto;
+        flex-wrap: nowrap;
+      }
+    }
+
+    .file-tab {
+      display: block;
+      width: 100%;
+      padding: var(--space-2) var(--space-6);
+      font-size: 13px;
+      font-family: var(--font-mono);
+      color: var(--color-text-muted);
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      transition: color 150ms ease, background 150ms ease;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .file-tab {
+        width: auto;
+        padding: var(--space-2) var(--space-3);
+        border-radius: 4px;
+      }
+    }
+
+    .file-tab:hover { color: var(--color-text-secondary); background: var(--color-accent-muted); }
+    .file-tab.active { color: var(--color-text-primary); font-weight: 500; background: var(--color-accent-muted); }
+    .file-tab.taste-file { font-weight: 500; color: var(--color-text-secondary); }
+    .file-tab.taste-file.active { color: var(--color-text-primary); }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--color-border-subtle);
+      margin: var(--space-3) var(--space-6);
+    }
+
+    @media (max-width: 768px) { .sidebar-divider { display: none; } }
+
+    .content-area {
+      padding: var(--space-8);
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .content-area { padding: var(--space-6) var(--space-4); }
+    }
+
+    /* ============================================
+       EXTRACT VIEW
+       ============================================ */
+    .page-extract { display: none; }
+    .page-extract.visible { display: block; }
+
+    .extract-content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-8) var(--space-32);
+    }
+
+    /* ============================================
+       MARKDOWN RENDERING
+       ============================================ */
+    .markdown-body {
+      max-width: 780px;
+      color: var(--color-text-primary);
+    }
+
+    .markdown-body h1 {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .markdown-body h2 {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-top: var(--space-12);
+      margin-bottom: var(--space-4);
+    }
+
+    .markdown-body h3 {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-3);
+    }
+
+    .markdown-body h4 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-2);
+    }
+
+    .markdown-body p {
+      margin-bottom: var(--space-4);
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+
+    .markdown-body blockquote {
+      border-left: 3px solid var(--color-border);
+      padding-left: var(--space-6);
+      margin: var(--space-6) 0;
+      color: var(--color-text-secondary);
+    }
+
+    .markdown-body blockquote p { color: var(--color-text-secondary); }
+
+    .markdown-body ul, .markdown-body ol {
+      padding-left: var(--space-6);
+      margin-bottom: var(--space-4);
+    }
+
+    .markdown-body li {
+      margin-bottom: var(--space-2);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .markdown-body strong { font-weight: 600; color: var(--color-text-primary); }
+
+    .markdown-body code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--color-accent-muted);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      color: var(--color-text-primary);
+    }
+
+    .markdown-body pre {
+      background: #1a1a1a;
+      border-radius: 6px;
+      padding: var(--space-6);
+      margin: var(--space-6) 0;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    .markdown-body pre code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      font-size: 13px;
+      color: #e0e0e0;
+    }
+
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-6) 0;
+      font-size: 14px;
+    }
+
+    .markdown-body th {
+      text-align: left;
+      font-weight: 600;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 2px solid var(--color-border);
+      color: var(--color-text-primary);
+    }
+
+    .markdown-body td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border-subtle);
+      color: var(--color-text-secondary);
+    }
+
+    .markdown-body hr {
+      border: none;
+      border-top: 1px solid var(--color-border-subtle);
+      margin: var(--space-12) 0;
+    }
+
+    .markdown-body a {
+      color: var(--color-text-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--color-border);
+    }
+
+    .markdown-body a:hover { text-decoration-color: var(--color-text-primary); }
+    .markdown-body em { color: var(--color-text-muted); }
+
+    .loading {
+      color: var(--color-text-muted);
+      font-size: 13px;
+      padding: var(--space-16) 0;
+    }
+
+    /* hljs dark theme overrides */
+    .markdown-body pre code.hljs { background: transparent; padding: 0; }
+    .hljs-keyword, .hljs-selector-tag { color: #c792ea; }
+    .hljs-string, .hljs-attr { color: #c3e88d; }
+    .hljs-number { color: #f78c6c; }
+    .hljs-comment { color: #676e95; }
+    .hljs-tag { color: #f07178; }
+    .hljs-name { color: #f07178; }
+    .hljs-attribute { color: #ffcb6b; }
+    .hljs-selector-class { color: #ffcb6b; }
+    .hljs-selector-id { color: #82aaff; }
+    .hljs-property { color: #82aaff; }
+    .hljs-built_in { color: #82aaff; }
+    .hljs-title { color: #82aaff; }
+    .hljs-section { color: #82aaff; }
+    .hljs-variable { color: #f07178; }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-title" onclick="navigate('home')">Taste</a>
+      <nav class="header-nav">
+        <button onclick="navigate('home')" id="nav-home">How it works</button>
+        <button onclick="navigate('browse')" id="nav-browse">Browse packages</button>
+        <button onclick="navigate('extract')" id="nav-extract">Extract taste</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HOMEPAGE ============ -->
+  <div class="page-home" id="page-home">
+    <section class="hero">
+      <h1>Teach your LLM what good web design looks like</h1>
+      <p class="lede">
+        Taste packages are structured design judgment documents. Point Claude Code (or any LLM coding agent) at a taste package, and it will produce <strong>consistently high-quality, opinionated</strong> HTML and CSS — instead of generic template output.
+      </p>
+      <p class="lede">
+        Not a component library. Not a design system. <strong>Encoded judgment</strong> — the beliefs, constraints, and calibration examples that turn "build me a homepage" into output that looks like a professional designed it.
+      </p>
+    </section>
+
+    <section class="home-content">
+      <h2>How it works</h2>
+
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="step-num">01</div>
+          <h3>Pick a package</h3>
+          <p>Choose Foundation (universal) plus an optional domain package that matches your project type.</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">02</div>
+          <h3>Point your agent</h3>
+          <p>Add a few lines to your project's CLAUDE.md telling the agent to fetch and follow the taste files.</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">03</div>
+          <h3>Build with taste</h3>
+          <p>The agent now has design judgment — typography rules, spacing systems, good/bad examples — and uses them in every decision.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2>What's in a taste package</h2>
+
+      <p>Each package has six components. Together, they give the LLM everything it needs to make good design decisions without a human designer in the loop.</p>
+
+      <table class="component-table">
+        <thead><tr><th>File</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>philosophy.md</td><td>Core beliefs that constrain every choice. "Whitespace is material, not absence." "The interface disappears."</td></tr>
+          <tr><td>constraints.md</td><td>Concrete parameters: type scale, spacing grid, color tokens, motion durations, image rules. The dials.</td></tr>
+          <tr><td>behavior.md</td><td>How taste manifests in decisions. "Remove before adding." "Start with content."</td></tr>
+          <tr><td>output-contract.md</td><td>Required shape of deliverables: semantic HTML, CSS custom properties, performance targets.</td></tr>
+          <tr><td>examples.md</td><td>Positive and negative calibration pairs — the most powerful component. Shows, not tells.</td></tr>
+          <tr><td>context.md</td><td>Reference sites, books, and design traditions that inform the package.</td></tr>
+        </tbody>
+      </table>
+
+      <p>Each package also has a <code>TASTE.md</code> — a condensed summary (~1500 tokens) that captures all six components in a single file. Start there.</p>
+
+      <hr>
+
+      <h2>Available packages</h2>
+
+      <div class="package-cards">
+        <a class="pkg-card foundation" onclick="navigate('browse', 'foundation')">
+          <h3>Foundation</h3>
+          <p>Universal web design judgment. Typography-as-architecture, 8px spacing grid, modular type scale, color token system, motion parameters. Every project starts here.</p>
+        </a>
+        <a class="pkg-card hospitality" onclick="navigate('browse', 'hospitality')">
+          <h3>Hospitality</h3>
+          <p>Hotels, resorts, luxury venues. Warm palette, serif display type, cinematic heroes, editorial image grids, slower transitions.</p>
+        </a>
+        <a class="pkg-card corporate" onclick="navigate('browse', 'corporate')">
+          <h3>Corporate</h3>
+          <p>Institutions, enterprises, science. Cool palette, WCAG AAA, breadcrumbs, mega-menus, information density, minimal motion.</p>
+        </a>
+        <a class="pkg-card artisan" onclick="navigate('browse', 'artisan')">
+          <h3>Artisan</h3>
+          <p>Boutique brands, studios, e-commerce. Gallery grids, mixed aspect ratios, product-sacred, curated-not-cataloged.</p>
+        </a>
+      </div>
+
+      <hr>
+
+      <h2>Quick start</h2>
+
+      <p>Add this to your project's <code>CLAUDE.md</code> file (the instructions file that Claude Code reads at the start of every session):</p>
+
+      <p class="snippet-label">CLAUDE.md</p>
+      <pre><code>## Design Taste
+
+Use WebFetch to read the following URLs before making
+any design or front-end decisions. Follow them as your
+design system.
+
+Foundation: https://taste.piroc.dev/foundation/TASTE.md
+Domain: https://taste.piroc.dev/hospitality/TASTE.md
+
+For detailed constraints, behavior, and examples:
+https://taste.piroc.dev/hospitality/constraints.md
+https://taste.piroc.dev/hospitality/examples.md
+
+### Client Overrides
+- Brand color: #1B4D3E
+- Display typeface: Cormorant Garamond</code></pre>
+
+      <p>Replace <code>hospitality</code> with your domain (<code>corporate</code>, <code>artisan</code>) or omit the domain line to use Foundation alone.</p>
+
+      <hr>
+
+      <h2>Extracting taste from a reference site</h2>
+
+      <p>Don't see a package that fits? Give your LLM a URL of a site you admire, and it can analyze it to produce a custom taste document.</p>
+
+      <p>The <a href="javascript:void(0)" onclick="navigate('extract')">extract guide</a> walks the LLM through a structured process: visit the URL, measure typography/spacing/color/motion, identify the design philosophy, and produce a set of client overrides that layer on top of the closest base package.</p>
+
+      <p>Point your agent to it:</p>
+
+      <p class="snippet-label">CLAUDE.md</p>
+      <pre><code>## Design Taste — Custom
+
+Fetch https://taste.piroc.dev/extract.md and follow
+the process to analyze this reference site and
+produce taste overrides for our project:
+
+Reference: https://example.com</code></pre>
+
+      <hr>
+
+      <h2>How the inheritance works</h2>
+
+      <p>Taste packages compose through inheritance. Domain packages extend Foundation — they only document divergences, not everything from scratch.</p>
+
+      <ul>
+        <li><strong>Philosophy and behavior</strong> concatenate: domain adds to foundation, never replaces it</li>
+        <li><strong>Constraints</strong> deep-merge: domain overrides specific values, foundation fills the rest</li>
+        <li><strong>Output contract and examples</strong> override: domain replaces foundation entirely</li>
+        <li><strong>Client overrides</strong> (in your CLAUDE.md) override everything</li>
+      </ul>
+
+      <p>Precedence: <strong>client &gt; domain &gt; foundation</strong></p>
+
+      <hr>
+
+      <h2>Why this works</h2>
+
+      <p>LLMs are good at following structured instructions. They're bad at having taste on their own — without guidance, they produce generic, committee-designed output full of gradients, hero carousels, and "world-class" copy.</p>
+
+      <p>Taste packages solve this by giving the LLM three things it can't generate from its training data alone:</p>
+
+      <ul>
+        <li><strong>Concrete constraints</strong> — "8px spacing grid, max 2 font families, no pure black" beats "make it clean and modern"</li>
+        <li><strong>Calibration examples</strong> — showing good code next to bad code with explanations of why each succeeds or fails is the single most effective way to steer LLM output</li>
+        <li><strong>A philosophy that says no</strong> — "restraint is skill, every element justifies its existence" gives the LLM permission to remove things, which it otherwise won't do</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ============ BROWSE VIEW ============ -->
+  <div class="page-browse" id="page-browse">
+    <nav class="package-tabs">
+      <div class="package-tabs-inner" id="package-tabs"></div>
+    </nav>
+    <div class="main-layout">
+      <aside class="file-sidebar" id="file-sidebar"></aside>
+      <main class="content-area">
+        <article class="markdown-body" id="content">
+          <p class="loading">Loading...</p>
+        </article>
+      </main>
+    </div>
+  </div>
+
+  <!-- ============ EXTRACT VIEW ============ -->
+  <div class="page-extract" id="page-extract">
+    <div class="extract-content">
+      <article class="markdown-body" id="extract-content">
+        <p class="loading">Loading...</p>
+      </article>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // DATA
+    // ==========================================
+    const packages = [
+      {
+        id: 'claude',
+        label: 'CLAUDE.md',
+        files: [
+          { id: 'CLAUDE', label: 'CLAUDE.md', path: 'CLAUDE.md', isTaste: true }
+        ]
+      },
+      {
+        id: 'foundation',
+        label: 'Foundation',
+        files: [
+          { id: 'TASTE', label: 'TASTE.md', path: 'foundation/TASTE.md', isTaste: true },
+          { id: 'philosophy', label: 'philosophy.md', path: 'foundation/philosophy.md' },
+          { id: 'constraints', label: 'constraints.md', path: 'foundation/constraints.md' },
+          { id: 'behavior', label: 'behavior.md', path: 'foundation/behavior.md' },
+          { id: 'output-contract', label: 'output-contract.md', path: 'foundation/output-contract.md' },
+          { id: 'examples', label: 'examples.md', path: 'foundation/examples.md' },
+          { id: 'context', label: 'context.md', path: 'foundation/context.md' }
+        ]
+      },
+      {
+        id: 'hospitality',
+        label: 'Hospitality',
+        files: [
+          { id: 'TASTE', label: 'TASTE.md', path: 'hospitality/TASTE.md', isTaste: true },
+          { id: 'philosophy', label: 'philosophy.md', path: 'hospitality/philosophy.md' },
+          { id: 'constraints', label: 'constraints.md', path: 'hospitality/constraints.md' },
+          { id: 'behavior', label: 'behavior.md', path: 'hospitality/behavior.md' },
+          { id: 'output-contract', label: 'output-contract.md', path: 'hospitality/output-contract.md' },
+          { id: 'examples', label: 'examples.md', path: 'hospitality/examples.md' },
+          { id: 'context', label: 'context.md', path: 'hospitality/context.md' }
+        ]
+      },
+      {
+        id: 'corporate',
+        label: 'Corporate',
+        files: [
+          { id: 'TASTE', label: 'TASTE.md', path: 'corporate/TASTE.md', isTaste: true },
+          { id: 'philosophy', label: 'philosophy.md', path: 'corporate/philosophy.md' },
+          { id: 'constraints', label: 'constraints.md', path: 'corporate/constraints.md' },
+          { id: 'behavior', label: 'behavior.md', path: 'corporate/behavior.md' },
+          { id: 'output-contract', label: 'output-contract.md', path: 'corporate/output-contract.md' },
+          { id: 'examples', label: 'examples.md', path: 'corporate/examples.md' },
+          { id: 'context', label: 'context.md', path: 'corporate/context.md' }
+        ]
+      },
+      {
+        id: 'artisan',
+        label: 'Artisan',
+        files: [
+          { id: 'TASTE', label: 'TASTE.md', path: 'artisan/TASTE.md', isTaste: true },
+          { id: 'philosophy', label: 'philosophy.md', path: 'artisan/philosophy.md' },
+          { id: 'constraints', label: 'constraints.md', path: 'artisan/constraints.md' },
+          { id: 'behavior', label: 'behavior.md', path: 'artisan/behavior.md' },
+          { id: 'output-contract', label: 'output-contract.md', path: 'artisan/output-contract.md' },
+          { id: 'examples', label: 'examples.md', path: 'artisan/examples.md' },
+          { id: 'context', label: 'context.md', path: 'artisan/context.md' }
+        ]
+      }
+    ];
+
+    let currentPage = 'home';
+    let activePackage = 'foundation';
+    let activeFile = 'TASTE';
+    const cache = {};
+
+    marked.setOptions({
+      highlight: function(code, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          return hljs.highlight(code, { language: lang }).value;
+        }
+        return hljs.highlightAuto(code).value;
+      }
+    });
+
+    // ==========================================
+    // NAVIGATION
+    // ==========================================
+    function navigate(page, pkg) {
+      currentPage = page;
+      if (pkg) {
+        activePackage = pkg;
+        activeFile = packages.find(p => p.id === pkg).files[0].id;
+      }
+      renderAll();
+      window.scrollTo(0, 0);
+    }
+
+    function renderAll() {
+      // Pages
+      document.getElementById('page-home').classList.toggle('visible', currentPage === 'home');
+      document.getElementById('page-browse').classList.toggle('visible', currentPage === 'browse');
+      document.getElementById('page-extract').classList.toggle('visible', currentPage === 'extract');
+
+      // Header nav active states
+      document.getElementById('nav-home').classList.toggle('active', currentPage === 'home');
+      document.getElementById('nav-browse').classList.toggle('active', currentPage === 'browse');
+      document.getElementById('nav-extract').classList.toggle('active', currentPage === 'extract');
+
+      if (currentPage === 'browse') {
+        renderPackageTabs();
+        renderFileSidebar();
+        loadAndRenderContent();
+      }
+
+      if (currentPage === 'extract') {
+        loadExtract();
+      }
+
+      // Hash
+      if (currentPage === 'home') {
+        history.replaceState(null, '', window.location.pathname);
+      } else if (currentPage === 'browse') {
+        history.replaceState(null, '', `#${activePackage}/${activeFile}`);
+      } else if (currentPage === 'extract') {
+        history.replaceState(null, '', '#extract');
+      }
+    }
+
+    // ==========================================
+    // BROWSE
+    // ==========================================
+    function renderPackageTabs() {
+      const container = document.getElementById('package-tabs');
+      container.innerHTML = packages.map(pkg =>
+        `<button class="package-tab ${pkg.id === activePackage ? 'active' : ''}"
+                data-pkg="${pkg.id}">${pkg.label}</button>`
+      ).join('');
+
+      container.querySelectorAll('.package-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activePackage = btn.dataset.pkg;
+          activeFile = packages.find(p => p.id === activePackage).files[0].id;
+          renderAll();
+        });
+      });
+    }
+
+    function renderFileSidebar() {
+      const container = document.getElementById('file-sidebar');
+      const pkg = packages.find(p => p.id === activePackage);
+      const tasteFiles = pkg.files.filter(f => f.isTaste);
+      const otherFiles = pkg.files.filter(f => !f.isTaste);
+
+      let html = tasteFiles.map(f =>
+        `<button class="file-tab taste-file ${f.id === activeFile ? 'active' : ''}"
+                data-file="${f.id}">${f.label}</button>`
+      ).join('');
+
+      if (otherFiles.length > 0) {
+        html += '<div class="sidebar-divider"></div>';
+        html += otherFiles.map(f =>
+          `<button class="file-tab ${f.id === activeFile ? 'active' : ''}"
+                  data-file="${f.id}">${f.label}</button>`
+        ).join('');
+      }
+
+      container.innerHTML = html;
+      container.querySelectorAll('.file-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeFile = btn.dataset.file;
+          renderAll();
+        });
+      });
+    }
+
+    async function loadAndRenderContent() {
+      const pkg = packages.find(p => p.id === activePackage);
+      const file = pkg.files.find(f => f.id === activeFile);
+      const contentEl = document.getElementById('content');
+      const cacheKey = file.path;
+
+      if (cache[cacheKey]) {
+        contentEl.innerHTML = cache[cacheKey];
+        return;
+      }
+
+      contentEl.innerHTML = '<p class="loading">Loading...</p>';
+      try {
+        const res = await fetch(file.path);
+        if (!res.ok) throw new Error(`${res.status}`);
+        const md = await res.text();
+        const html = marked.parse(md);
+        cache[cacheKey] = html;
+        contentEl.innerHTML = html;
+      } catch (e) {
+        contentEl.innerHTML = `<p class="loading">Could not load ${file.path}</p>`;
+      }
+    }
+
+    // ==========================================
+    // EXTRACT
+    // ==========================================
+    async function loadExtract() {
+      const contentEl = document.getElementById('extract-content');
+      if (cache['extract.md']) {
+        contentEl.innerHTML = cache['extract.md'];
+        return;
+      }
+      contentEl.innerHTML = '<p class="loading">Loading...</p>';
+      try {
+        const res = await fetch('extract.md');
+        if (!res.ok) throw new Error(`${res.status}`);
+        const md = await res.text();
+        const html = marked.parse(md);
+        cache['extract.md'] = html;
+        contentEl.innerHTML = html;
+      } catch (e) {
+        contentEl.innerHTML = '<p class="loading">Could not load extract.md</p>';
+      }
+    }
+
+    // ==========================================
+    // HASH ROUTING
+    // ==========================================
+    function parseHash() {
+      const hash = location.hash.replace('#', '');
+      if (!hash) { currentPage = 'home'; return; }
+      if (hash === 'extract') { currentPage = 'extract'; return; }
+
+      const [pkg, file] = hash.split('/');
+      if (packages.find(p => p.id === pkg)) {
+        currentPage = 'browse';
+        activePackage = pkg;
+        const pkgData = packages.find(p => p.id === pkg);
+        if (file && pkgData.files.find(f => f.id === file)) {
+          activeFile = file;
+        } else {
+          activeFile = pkgData.files[0].id;
+        }
+      }
+    }
+
+    // ==========================================
+    // KEYBOARD NAV (browse only)
+    // ==========================================
+    document.addEventListener('keydown', (e) => {
+      if (currentPage !== 'browse') return;
+      const pkg = packages.find(p => p.id === activePackage);
+      const fileIdx = pkg.files.findIndex(f => f.id === activeFile);
+      const pkgIdx = packages.findIndex(p => p.id === activePackage);
+
+      if (e.key === 'ArrowDown' || e.key === 'j') {
+        if (fileIdx < pkg.files.length - 1) { activeFile = pkg.files[fileIdx + 1].id; renderAll(); }
+      } else if (e.key === 'ArrowUp' || e.key === 'k') {
+        if (fileIdx > 0) { activeFile = pkg.files[fileIdx - 1].id; renderAll(); }
+      } else if (e.key === 'ArrowRight' || e.key === 'l') {
+        if (pkgIdx < packages.length - 1) {
+          activePackage = packages[pkgIdx + 1].id;
+          activeFile = packages[pkgIdx + 1].files[0].id;
+          renderAll();
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'h') {
+        if (pkgIdx > 0) {
+          activePackage = packages[pkgIdx - 1].id;
+          activeFile = packages[pkgIdx - 1].files[0].id;
+          renderAll();
+        }
+      }
+    });
+
+    // ==========================================
+    // INIT
+    // ==========================================
+    parseHash();
+    renderAll();
+    window.addEventListener('hashchange', () => { parseHash(); renderAll(); });
+  </script>
+</body>
+</html>
