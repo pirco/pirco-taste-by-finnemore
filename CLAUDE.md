@@ -52,8 +52,8 @@ Read and follow these taste packages for all design and front-end decisions.
 
 Use WebFetch to load the following URLs and follow them as your design system:
 
-Foundation: https://taste.piroc.dev/foundation/TASTE.md
-Domain: https://taste.piroc.dev/hospitality/TASTE.md
+Foundation: ~/GitHub/pirco/pirco-taste-by-finnemore/foundation/TASTE.md
+Domain: ~/GitHub/pirco/pirco-taste-by-finnemore/hospitality/TASTE.md
 
 For detailed guidance on any component, fetch the full files in the package directory
 (philosophy.md, constraints.md, behavior.md, output-contract.md, examples.md, context.md).
