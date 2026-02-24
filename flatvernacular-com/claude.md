@@ -9,7 +9,7 @@ Reference: https://flatvernacular.com
 ## Design Taste
 
 Read and follow this default taste package for all design and front-end decisions.
-Foundation: https://pirco-taste.vercel.app/foundation/TASTE.md
+Foundation: https://claude-taste.piroc.com/foundation/TASTE.md
 domain: flatvernacular-com
 
 ### Reference site
