@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +33,13 @@
       --space-32: 8rem;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: var(--font-body);
@@ -77,7 +84,8 @@
       gap: var(--space-6);
     }
 
-    .header-nav a, .header-nav button {
+    .header-nav a,
+    .header-nav button {
       font-size: 13px;
       font-family: inherit;
       color: var(--color-text-muted);
@@ -88,8 +96,13 @@
       transition: color 150ms ease;
     }
 
-    .header-nav a:hover, .header-nav button:hover { color: var(--color-text-secondary); }
-    .header-nav a.active, .header-nav button.active {
+    .header-nav a:hover,
+    .header-nav button:hover {
+      color: var(--color-text-secondary);
+    }
+
+    .header-nav a.active,
+    .header-nav button.active {
       color: var(--color-text-primary);
       font-weight: 500;
     }
@@ -97,8 +110,13 @@
     /* ============================================
        HOMEPAGE
        ============================================ */
-    .page-home { display: none; }
-    .page-home.visible { display: block; }
+    .page-home {
+      display: none;
+    }
+
+    .page-home.visible {
+      display: block;
+    }
 
     .hero {
       max-width: 680px;
@@ -121,7 +139,10 @@
       margin-bottom: var(--space-12);
     }
 
-    .hero .lede strong { color: var(--color-text-primary); font-weight: 500; }
+    .hero .lede strong {
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
 
     .home-content {
       max-width: 680px;
@@ -174,7 +195,8 @@
       font-size: 13px;
     }
 
-    .home-content ul, .home-content ol {
+    .home-content ul,
+    .home-content ol {
       padding-left: var(--space-6);
       margin-bottom: var(--space-4);
     }
@@ -184,7 +206,10 @@
       margin-bottom: var(--space-2);
     }
 
-    .home-content li strong { color: var(--color-text-primary); font-weight: 500; }
+    .home-content li strong {
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
 
     .home-content hr {
       border: none;
@@ -208,9 +233,17 @@
     }
 
     @media (max-width: 640px) {
-      .how-grid { grid-template-columns: 1fr; }
-      .hero { padding: var(--space-16) var(--space-4) var(--space-12); }
-      .home-content { padding: 0 var(--space-4) var(--space-16); }
+      .how-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: var(--space-16) var(--space-4) var(--space-12);
+      }
+
+      .home-content {
+        padding: 0 var(--space-4) var(--space-16);
+      }
     }
 
     .how-step {
@@ -247,7 +280,9 @@
     }
 
     @media (max-width: 640px) {
-      .package-cards { grid-template-columns: 1fr; }
+      .package-cards {
+        grid-template-columns: 1fr;
+      }
     }
 
     .pkg-card {
@@ -262,7 +297,9 @@
       display: block;
     }
 
-    .pkg-card:hover { border-color: var(--color-border); }
+    .pkg-card:hover {
+      border-color: var(--color-border);
+    }
 
     .pkg-card h3 {
       font-size: 14px;
@@ -277,10 +314,21 @@
       line-height: 1.5;
     }
 
-    .pkg-card.foundation { border-left: 3px solid var(--color-text-primary); }
-    .pkg-card.hospitality { border-left: 3px solid #b8953f; }
-    .pkg-card.corporate { border-left: 3px solid #4a7ab5; }
-    .pkg-card.artisan { border-left: 3px solid #7a8a6c; }
+    .pkg-card.foundation {
+      border-left: 3px solid var(--color-text-primary);
+    }
+
+    .pkg-card.hospitality {
+      border-left: 3px solid #b8953f;
+    }
+
+    .pkg-card.corporate {
+      border-left: 3px solid #4a7ab5;
+    }
+
+    .pkg-card.artisan {
+      border-left: 3px solid #7a8a6c;
+    }
 
     .component-table {
       width: 100%;
@@ -314,8 +362,13 @@
     /* ============================================
        BROWSE VIEW
        ============================================ */
-    .page-browse { display: none; }
-    .page-browse.visible { display: block; }
+    .page-browse {
+      display: none;
+    }
+
+    .page-browse.visible {
+      display: block;
+    }
 
     .package-tabs {
       background: var(--color-bg);
@@ -345,7 +398,10 @@
       font-family: inherit;
     }
 
-    .package-tab:hover { color: var(--color-text-secondary); }
+    .package-tab:hover {
+      color: var(--color-text-secondary);
+    }
+
     .package-tab.active {
       color: var(--color-text-primary);
       font-weight: 500;
@@ -361,8 +417,13 @@
     }
 
     @media (max-width: 768px) {
-      .main-layout { grid-template-columns: 1fr; }
-      .package-tabs-inner { padding: 0 var(--space-4); }
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .package-tabs-inner {
+        padding: 0 var(--space-4);
+      }
     }
 
     .file-sidebar {
@@ -411,10 +472,25 @@
       }
     }
 
-    .file-tab:hover { color: var(--color-text-secondary); background: var(--color-accent-muted); }
-    .file-tab.active { color: var(--color-text-primary); font-weight: 500; background: var(--color-accent-muted); }
-    .file-tab.taste-file { font-weight: 500; color: var(--color-text-secondary); }
-    .file-tab.taste-file.active { color: var(--color-text-primary); }
+    .file-tab:hover {
+      color: var(--color-text-secondary);
+      background: var(--color-accent-muted);
+    }
+
+    .file-tab.active {
+      color: var(--color-text-primary);
+      font-weight: 500;
+      background: var(--color-accent-muted);
+    }
+
+    .file-tab.taste-file {
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+
+    .file-tab.taste-file.active {
+      color: var(--color-text-primary);
+    }
 
     .sidebar-divider {
       height: 1px;
@@ -422,7 +498,11 @@
       margin: var(--space-3) var(--space-6);
     }
 
-    @media (max-width: 768px) { .sidebar-divider { display: none; } }
+    @media (max-width: 768px) {
+      .sidebar-divider {
+        display: none;
+      }
+    }
 
     .content-area {
       padding: var(--space-8);
@@ -431,14 +511,21 @@
     }
 
     @media (max-width: 768px) {
-      .content-area { padding: var(--space-6) var(--space-4); }
+      .content-area {
+        padding: var(--space-6) var(--space-4);
+      }
     }
 
     /* ============================================
        EXTRACT VIEW
        ============================================ */
-    .page-extract { display: none; }
-    .page-extract.visible { display: block; }
+    .page-extract {
+      display: none;
+    }
+
+    .page-extract.visible {
+      display: block;
+    }
 
     .extract-content {
       max-width: 680px;
@@ -502,9 +589,12 @@
       color: var(--color-text-secondary);
     }
 
-    .markdown-body blockquote p { color: var(--color-text-secondary); }
+    .markdown-body blockquote p {
+      color: var(--color-text-secondary);
+    }
 
-    .markdown-body ul, .markdown-body ol {
+    .markdown-body ul,
+    .markdown-body ol {
       padding-left: var(--space-6);
       margin-bottom: var(--space-4);
     }
@@ -515,7 +605,10 @@
       line-height: 1.6;
     }
 
-    .markdown-body strong { font-weight: 600; color: var(--color-text-primary); }
+    .markdown-body strong {
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
 
     .markdown-body code {
       font-family: var(--font-mono);
@@ -577,8 +670,13 @@
       text-decoration-color: var(--color-border);
     }
 
-    .markdown-body a:hover { text-decoration-color: var(--color-text-primary); }
-    .markdown-body em { color: var(--color-text-muted); }
+    .markdown-body a:hover {
+      text-decoration-color: var(--color-text-primary);
+    }
+
+    .markdown-body em {
+      color: var(--color-text-muted);
+    }
 
     .loading {
       color: var(--color-text-muted);
@@ -587,23 +685,71 @@
     }
 
     /* hljs dark theme overrides */
-    .markdown-body pre code.hljs { background: transparent; padding: 0; }
-    .hljs-keyword, .hljs-selector-tag { color: #c792ea; }
-    .hljs-string, .hljs-attr { color: #c3e88d; }
-    .hljs-number { color: #f78c6c; }
-    .hljs-comment { color: #676e95; }
-    .hljs-tag { color: #f07178; }
-    .hljs-name { color: #f07178; }
-    .hljs-attribute { color: #ffcb6b; }
-    .hljs-selector-class { color: #ffcb6b; }
-    .hljs-selector-id { color: #82aaff; }
-    .hljs-property { color: #82aaff; }
-    .hljs-built_in { color: #82aaff; }
-    .hljs-title { color: #82aaff; }
-    .hljs-section { color: #82aaff; }
-    .hljs-variable { color: #f07178; }
+    .markdown-body pre code.hljs {
+      background: transparent;
+      padding: 0;
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #c792ea;
+    }
+
+    .hljs-string,
+    .hljs-attr {
+      color: #c3e88d;
+    }
+
+    .hljs-number {
+      color: #f78c6c;
+    }
+
+    .hljs-comment {
+      color: #676e95;
+    }
+
+    .hljs-tag {
+      color: #f07178;
+    }
+
+    .hljs-name {
+      color: #f07178;
+    }
+
+    .hljs-attribute {
+      color: #ffcb6b;
+    }
+
+    .hljs-selector-class {
+      color: #ffcb6b;
+    }
+
+    .hljs-selector-id {
+      color: #82aaff;
+    }
+
+    .hljs-property {
+      color: #82aaff;
+    }
+
+    .hljs-built_in {
+      color: #82aaff;
+    }
+
+    .hljs-title {
+      color: #82aaff;
+    }
+
+    .hljs-section {
+      color: #82aaff;
+    }
+
+    .hljs-variable {
+      color: #f07178;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- ============ HEADER ============ -->
@@ -623,10 +769,13 @@
     <section class="hero">
       <h1>Teach your LLM what good web design looks like</h1>
       <p class="lede">
-        Taste packages are structured design judgment documents. Point Claude Code (or any LLM coding agent) at a taste package, and it will produce <strong>consistently high-quality, opinionated</strong> HTML and CSS — instead of generic template output.
+        Taste packages are structured design judgment documents. Point Claude Code (or any LLM coding agent) at a taste
+        package, and it will produce <strong>consistently high-quality, opinionated</strong> HTML and CSS — instead of
+        generic template output.
       </p>
       <p class="lede">
-        Not a component library. Not a design system. <strong>Encoded judgment</strong> — the beliefs, constraints, and calibration examples that turn "build me a homepage" into output that looks like a professional designed it.
+        Not a component library. Not a design system. <strong>Encoded judgment</strong> — the beliefs, constraints, and
+        calibration examples that turn "build me a homepage" into output that looks like a professional designed it.
       </p>
     </section>
 
@@ -647,7 +796,8 @@
         <div class="how-step">
           <div class="step-num">03</div>
           <h3>Build with taste</h3>
-          <p>The agent now has design judgment — typography rules, spacing systems, good/bad examples — and uses them in every decision.</p>
+          <p>The agent now has design judgment — typography rules, spacing systems, good/bad examples — and uses them in
+            every decision.</p>
         </div>
       </div>
 
@@ -655,21 +805,48 @@
 
       <h2>What's in a taste package</h2>
 
-      <p>Each package has six components. Together, they give the LLM everything it needs to make good design decisions without a human designer in the loop.</p>
+      <p>Each package has six components. Together, they give the LLM everything it needs to make good design decisions
+        without a human designer in the loop.</p>
 
       <table class="component-table">
-        <thead><tr><th>File</th><th>What it does</th></tr></thead>
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>What it does</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr><td>philosophy.md</td><td>Core beliefs that constrain every choice. "Whitespace is material, not absence." "The interface disappears."</td></tr>
-          <tr><td>constraints.md</td><td>Concrete parameters: type scale, spacing grid, color tokens, motion durations, image rules. The dials.</td></tr>
-          <tr><td>behavior.md</td><td>How taste manifests in decisions. "Remove before adding." "Start with content."</td></tr>
-          <tr><td>output-contract.md</td><td>Required shape of deliverables: semantic HTML, CSS custom properties, performance targets.</td></tr>
-          <tr><td>examples.md</td><td>Positive and negative calibration pairs — the most powerful component. Shows, not tells.</td></tr>
-          <tr><td>context.md</td><td>Reference sites, books, and design traditions that inform the package.</td></tr>
+          <tr>
+            <td>philosophy.md</td>
+            <td>Core beliefs that constrain every choice. "Whitespace is material, not absence." "The interface
+              disappears."</td>
+          </tr>
+          <tr>
+            <td>constraints.md</td>
+            <td>Concrete parameters: type scale, spacing grid, color tokens, motion durations, image rules. The dials.
+            </td>
+          </tr>
+          <tr>
+            <td>behavior.md</td>
+            <td>How taste manifests in decisions. "Remove before adding." "Start with content."</td>
+          </tr>
+          <tr>
+            <td>output-contract.md</td>
+            <td>Required shape of deliverables: semantic HTML, CSS custom properties, performance targets.</td>
+          </tr>
+          <tr>
+            <td>examples.md</td>
+            <td>Positive and negative calibration pairs — the most powerful component. Shows, not tells.</td>
+          </tr>
+          <tr>
+            <td>context.md</td>
+            <td>Reference sites, books, and design traditions that inform the package.</td>
+          </tr>
         </tbody>
       </table>
 
-      <p>Each package also has a <code>TASTE.md</code> — a condensed summary (~1500 tokens) that captures all six components in a single file. Start there.</p>
+      <p>Each package also has a <code>TASTE.md</code> — a condensed summary (~1500 tokens) that captures all six
+        components in a single file. Start there.</p>
 
       <hr>
 
@@ -678,19 +855,23 @@
       <div class="package-cards">
         <a class="pkg-card foundation" onclick="navigate('browse', 'foundation')">
           <h3>Foundation</h3>
-          <p>Universal web design judgment. Typography-as-architecture, 8px spacing grid, modular type scale, color token system, motion parameters. Every project starts here.</p>
+          <p>Universal web design judgment. Typography-as-architecture, 8px spacing grid, modular type scale, color
+            token system, motion parameters. Every project starts here.</p>
         </a>
         <a class="pkg-card hospitality" onclick="navigate('browse', 'hospitality')">
           <h3>Hospitality</h3>
-          <p>Hotels, resorts, luxury venues. Warm palette, serif display type, cinematic heroes, editorial image grids, slower transitions.</p>
+          <p>Hotels, resorts, luxury venues. Warm palette, serif display type, cinematic heroes, editorial image grids,
+            slower transitions.</p>
         </a>
         <a class="pkg-card corporate" onclick="navigate('browse', 'corporate')">
           <h3>Corporate</h3>
-          <p>Institutions, enterprises, science. Cool palette, WCAG AAA, breadcrumbs, mega-menus, information density, minimal motion.</p>
+          <p>Institutions, enterprises, science. Cool palette, WCAG AAA, breadcrumbs, mega-menus, information density,
+            minimal motion.</p>
         </a>
         <a class="pkg-card artisan" onclick="navigate('browse', 'artisan')">
           <h3>Artisan</h3>
-          <p>Boutique brands, studios, e-commerce. Gallery grids, mixed aspect ratios, product-sacred, curated-not-cataloged.</p>
+          <p>Boutique brands, studios, e-commerce. Gallery grids, mixed aspect ratios, product-sacred,
+            curated-not-cataloged.</p>
         </a>
       </div>
 
@@ -698,7 +879,8 @@
 
       <h2>Quick start</h2>
 
-      <p>Add this to your project's <code>CLAUDE.md</code> file (the instructions file that Claude Code reads at the start of every session):</p>
+      <p>Add this to your project's <code>CLAUDE.md</code> file (the instructions file that Claude Code reads at the
+        start of every session):</p>
 
       <p class="snippet-label">CLAUDE.md</p>
       <pre><code>## Design Taste
@@ -707,33 +889,37 @@ Use WebFetch to read the following URLs before making
 any design or front-end decisions. Follow them as your
 design system.
 
-Foundation: https://taste.piroc.dev/foundation/TASTE.md
-Domain: https://taste.piroc.dev/hospitality/TASTE.md
+Foundation: https://pirco-taste.vercel.app/foundation/TASTE.md
+Domain: https://pirco-taste.vercel.app/hospitality/TASTE.md
 
 For detailed constraints, behavior, and examples:
-https://taste.piroc.dev/hospitality/constraints.md
-https://taste.piroc.dev/hospitality/examples.md
+https://pirco-taste.vercel.app/hospitality/constraints.md
+https://pirco-taste.vercel.app/hospitality/examples.md
 
 ### Client Overrides
 - Brand color: #1B4D3E
 - Display typeface: Cormorant Garamond</code></pre>
 
-      <p>Replace <code>hospitality</code> with your domain (<code>corporate</code>, <code>artisan</code>) or omit the domain line to use Foundation alone.</p>
+      <p>Replace <code>hospitality</code> with your domain (<code>corporate</code>, <code>artisan</code>) or omit the
+        domain line to use Foundation alone.</p>
 
       <hr>
 
       <h2>Extracting taste from a reference site</h2>
 
-      <p>Don't see a package that fits? Give your LLM a URL of a site you admire, and it can analyze it to produce a custom taste document.</p>
+      <p>Don't see a package that fits? Give your LLM a URL of a site you admire, and it can analyze it to produce a
+        custom taste document.</p>
 
-      <p>The <a href="javascript:void(0)" onclick="navigate('extract')">extract guide</a> walks the LLM through a structured process: visit the URL, measure typography/spacing/color/motion, identify the design philosophy, and produce a set of client overrides that layer on top of the closest base package.</p>
+      <p>The <a href="javascript:void(0)" onclick="navigate('extract')">extract guide</a> walks the LLM through a
+        structured process: visit the URL, measure typography/spacing/color/motion, identify the design philosophy, and
+        produce a set of client overrides that layer on top of the closest base package.</p>
 
       <p>Point your agent to it:</p>
 
       <p class="snippet-label">CLAUDE.md</p>
       <pre><code>## Design Taste — Custom
 
-Fetch https://taste.piroc.dev/extract.md and follow
+Fetch https://pirco-taste.vercel.app/extract.md and follow
 the process to analyze this reference site and
 produce taste overrides for our project:
 
@@ -743,7 +929,8 @@ Reference: https://example.com</code></pre>
 
       <h2>How the inheritance works</h2>
 
-      <p>Taste packages compose through inheritance. Domain packages extend Foundation — they only document divergences, not everything from scratch.</p>
+      <p>Taste packages compose through inheritance. Domain packages extend Foundation — they only document divergences,
+        not everything from scratch.</p>
 
       <ul>
         <li><strong>Philosophy and behavior</strong> concatenate: domain adds to foundation, never replaces it</li>
@@ -758,14 +945,19 @@ Reference: https://example.com</code></pre>
 
       <h2>Why this works</h2>
 
-      <p>LLMs are good at following structured instructions. They're bad at having taste on their own — without guidance, they produce generic, committee-designed output full of gradients, hero carousels, and "world-class" copy.</p>
+      <p>LLMs are good at following structured instructions. They're bad at having taste on their own — without
+        guidance, they produce generic, committee-designed output full of gradients, hero carousels, and "world-class"
+        copy.</p>
 
       <p>Taste packages solve this by giving the LLM three things it can't generate from its training data alone:</p>
 
       <ul>
-        <li><strong>Concrete constraints</strong> — "8px spacing grid, max 2 font families, no pure black" beats "make it clean and modern"</li>
-        <li><strong>Calibration examples</strong> — showing good code next to bad code with explanations of why each succeeds or fails is the single most effective way to steer LLM output</li>
-        <li><strong>A philosophy that says no</strong> — "restraint is skill, every element justifies its existence" gives the LLM permission to remove things, which it otherwise won't do</li>
+        <li><strong>Concrete constraints</strong> — "8px spacing grid, max 2 font families, no pure black" beats "make
+          it clean and modern"</li>
+        <li><strong>Calibration examples</strong> — showing good code next to bad code with explanations of why each
+          succeeds or fails is the single most effective way to steer LLM output</li>
+        <li><strong>A philosophy that says no</strong> — "restraint is skill, every element justifies its existence"
+          gives the LLM permission to remove things, which it otherwise won't do</li>
       </ul>
     </section>
   </div>
@@ -866,7 +1058,7 @@ Reference: https://example.com</code></pre>
     const cache = {};
 
     marked.setOptions({
-      highlight: function(code, lang) {
+      highlight: function (code, lang) {
         if (lang && hljs.getLanguage(lang)) {
           return hljs.highlight(code, { language: lang }).value;
         }
@@ -1068,4 +1260,5 @@ Reference: https://example.com</code></pre>
     window.addEventListener('hashchange', () => { parseHash(); renderAll(); });
   </script>
 </body>
+
 </html>
