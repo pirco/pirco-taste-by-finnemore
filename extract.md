@@ -111,12 +111,12 @@ Produce the final output as a markdown block that the developer can paste into t
 
 Read and follow these taste packages for all design and front-end decisions.
 
-Foundation: ~/GitHub/pirco/pirco-taste-by-finnemore/hospitality/TASTE.md
-Domain:~/GitHub/pirco/pirco-taste-by-finnemore/[domain]/TASTE.md
+Foundation: https://claude-taste.piroc.com/foundation/TASTE.md
+Domain: https://claude-taste.piroc.com/[domain]/TASTE.md
 
 For detailed constraints, behavior, and examples, fetch the full files:
-~/GitHub/pirco/pirco-taste-by-finnemore/[domain]/constraints.md
-~/GitHub/pirco/pirco-taste-by-finnemore/[domain]/examples.md
+https://claude-taste.piroc.com/[domain]/constraints.md
+https://claude-taste.piroc.com/[domain]/examples.md
 
 ### Reference site
 [URL] — [one-sentence description of what makes this site distinctive]
