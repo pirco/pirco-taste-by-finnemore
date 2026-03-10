@@ -1,4 +1,4 @@
-## Design Taste — Replica
+## Design Taste – New Design
 
 ### Step 1: Extract taste from the reference site
 Use WebFetch to load https://claude-taste.piroc.com/extract.md and follow
